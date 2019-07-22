@@ -2,6 +2,7 @@ import { AuthService } from './../shared/auth.service';
 import { Component, OnInit, ElementRef, ViewChild } from '@angular/core';
 import { User } from '../models/user.model';
 import { Router } from '@angular/router';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-login',
@@ -17,6 +18,8 @@ export class LoginComponent implements OnInit {
 
   ngOnInit() {
     this.user = new User();
+    this.user.email = '';
+    this.user.password = '';
   }
 
   onLogin() {
@@ -36,7 +39,7 @@ export class LoginComponent implements OnInit {
           (<HTMLInputElement>this.loginButton.nativeElement).disabled = false;
         });
     } else {
-      alert('Please fill login data');
+      Swal.fire('Invalid data', 'Please fill login data!', 'warning');
     }
   }
 }

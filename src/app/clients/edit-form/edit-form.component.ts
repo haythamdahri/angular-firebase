@@ -1,7 +1,7 @@
 import { Client } from './../../models/client.model';
 import { Subscription } from 'rxjs';
 import { ClientService } from './../../shared/client.service';
-import { User } from './../../models/user.model';
+import Swal from 'sweetalert2';
 import {
   Component,
   OnInit,
@@ -9,7 +9,7 @@ import {
   ElementRef,
   ViewChild
 } from '@angular/core';
-import { ActivatedRoute, Params } from '@angular/router';
+import { ActivatedRoute, Params, Router } from '@angular/router';
 
 @Component({
   selector: 'app-edit-form',
@@ -23,23 +23,25 @@ export class EditFormComponent implements OnInit, OnDestroy {
 
   constructor(
     private route: ActivatedRoute,
-    private clientService: ClientService
+    private clientService: ClientService,
+    private router: Router
   ) {}
 
   ngOnInit() {
     this.subscription = this.route.params.subscribe(params => {
       console.log(params.id);
       if (params['id'] != null) {
-        this.clientService
-          .getClient(params['id'])
-          .subscribe(data => {
-            this.client = {
-              id: data.payload.id,
-              ...data.payload.data()
-            } as Client;
-          });
+        this.clientService.getClient(params['id']).subscribe(data => {
+          this.client = {
+            id: data.payload.id,
+            ...data.payload.data()
+          } as Client;
+        });
       } else {
         this.client = new Client();
+        this.client.firstName = '';
+        this.client.lastName = '';
+        this.client.city = '';
       }
     });
   }
@@ -54,23 +56,76 @@ export class EditFormComponent implements OnInit, OnDestroy {
       this.client.lastName !== '' &&
       this.client.city !== ''
     ) {
+      (<HTMLInputElement>this.saveBtn.nativeElement).innerHTML =
+        '<i class="fas fa-spinner fa-spin"></i> Saving';
+      (<HTMLInputElement>this.saveBtn.nativeElement).disabled = true;
       if (this.client.id != undefined) {
         this.clientService
           .updateClient(this.client)
           .then(client => {
-            alert('Data saved successflly');
+            const Toast = Swal.mixin({
+              toast: true,
+              position: 'top-end',
+              showConfirmButton: false,
+              timer: 3000
+            });
+
+            Toast.fire({
+              type: 'success',
+              title: 'Client saved successfully'
+            });
+            this.router.navigate(['clients']);
           })
-          .catch(err => alert('An error occured, please try again!'));
+          .catch(err => {
+            const Toast = Swal.mixin({
+              toast: true,
+              position: 'top-end',
+              showConfirmButton: false,
+              timer: 3000
+            });
+            Toast.fire({
+              type: 'error',
+              title: 'An error occurred, please try again later!'
+            });
+            (<HTMLInputElement>this.saveBtn.nativeElement).innerHTML =
+              '<i class="fas fa-save"></i> Save';
+            (<HTMLInputElement>this.saveBtn.nativeElement).disabled = false;
+          });
       } else {
         this.clientService
           .addClient(this.client)
           .then(client => {
-            alert('Data saved successflly');
+            const Toast = Swal.mixin({
+              toast: true,
+              position: 'top-end',
+              showConfirmButton: false,
+              timer: 3000
+            });
+
+            Toast.fire({
+              type: 'success',
+              title: 'Client saved successfully'
+            });
+            this.router.navigate(['clients']);
           })
-          .catch(err => alert('An error occured, please try again!'));
+          .catch(err => {
+            const Toast = Swal.mixin({
+              toast: true,
+              position: 'top-end',
+              showConfirmButton: false,
+              timer: 3000
+            });
+            Toast.fire({
+              type: 'error',
+              title: 'An error occurred, please try again later!'
+            });
+            (<HTMLInputElement>this.saveBtn.nativeElement).innerHTML =
+              '<i class="fas fa-save"></i> Save';
+            (<HTMLInputElement>this.saveBtn.nativeElement).disabled = false;
+          });
       }
     } else {
-      alert('Please fill login data');
+      Swal.fire('Invalid data', 'Please fill valid data!', 'warning');
     }
   }
 }

@@ -15,6 +15,7 @@ import { LoginComponent } from './login/login.component';
 import { FormsModule } from '@angular/forms';
 import { AngularFireAuthGuardModule } from '@angular/fire/auth-guard';
 import { AngularFireDatabaseModule } from '@angular/fire/database';
+import { NgxPaginationModule } from 'ngx-pagination';
 
 @NgModule({
   declarations: [
@@ -34,9 +35,10 @@ import { AngularFireDatabaseModule } from '@angular/fire/database';
     AngularFireStorageModule, // imports firebase/storage only needed for storage features
     AngularFireAuthGuardModule,
     AngularFireDatabaseModule,
-    FormsModule
+    FormsModule,
+    NgxPaginationModule
   ],
   providers: [],
   bootstrap: [AppComponent]
 })
-export class AppModule { }
+export class AppModule {}
