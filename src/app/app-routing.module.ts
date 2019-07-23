@@ -1,3 +1,5 @@
+import { RecorderComponent } from "./recorder/recorder.component";
+import { FilesComponent } from "./files/files.component";
 import {
   AngularFireAuthGuard,
   hasCustomClaim,
@@ -23,6 +25,16 @@ const routes: Routes = [
       {path: 'save', component: EditFormComponent},
       {path: 'save/:id', component: EditFormComponent}
     ]
+  },
+  {
+    path: 'files',
+    component: FilesComponent,
+    ...canActivate(redirectUnauthorizedToLogin)
+  },
+  {
+    path: 'recorder',
+    component: RecorderComponent,
+    ...canActivate(redirectUnauthorizedToLogin)
   },
   {
     path: 'login',

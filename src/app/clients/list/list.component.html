@@ -12,6 +12,13 @@
       </a>
     </div>
 
+    <!-- Search field -->
+    <div class="col-12 text-center">
+      <div class="form-group">
+        <input type="text" #search (keyup)="onSearch(search.value)" class="form-control" id="Search" placeholder="Search by city">
+      </div>
+    </div>
+
 
     <!-- Clients list section -->
     <div class="table-responsive">
@@ -26,9 +33,18 @@
           </tr>
         </thead>
         <tbody>
+
+          <!-- Show loading while fetching data -->
           <ng-container *ngIf="!clients">
             <tr class="alert alert-info text-center">
               <td colspan="5"><i class="fas fa-spinner fa-spin"></i> Loading data, please wait!</td>
+            </tr>
+          </ng-container>
+
+          <!-- Show warning for no data found on the sevrer -->
+          <ng-container *ngIf="clients && clients.length == 0">
+            <tr class="alert alert-warning text-center">
+              <td colspan="5"><i class="fas fa-exclamation"></i> No data has been found!</td>
             </tr>
           </ng-container>
 

@@ -1,0 +1,38 @@
+<div class="row">
+
+  <div class="col-12 col-sm-12 col-md-8 col-lg-8 col-xl-8 mx-auto mt-4 mb-4">
+    <div class="card">
+      <div class="card-header">
+        <i class="fas fa-file-upload"></i> File uploader
+      </div>
+      <div class="card-body">
+        <h5 class="card-title"><i class="fas fa-folder"></i> {{ !uploadStarted ? 'Upload file' : 'Uploading file...' }}</h5>
+        <form class="card-text" *ngIf="!fileUploaded">
+          <div class="custom-file">
+            <input type="file" (change)="onFileUpload($event)" class="custom-file-input" id="customFile" [disabled]="uploadStarted">
+            <label class="custom-file-label" for="customFile">Choose file</label>
+          </div>
+        </form>
+
+        <div class="progress mt-4" *ngIf="uploadStarted">
+          <div class="progress-bar progress-bar-striped" role="progressbar" [ngStyle]="{'width.%': uploadPercent | async}" attr.aria-valuenow="{{ uploadPercent | async }}" aria-valuemin="0" aria-valuemax="100"></div>
+        </div>
+
+        <ng-container *ngIf="fileUploaded">
+            <a href="{{ downloadURL | async }}" target="_blank">Download uploaded file</a>    
+            <hr>
+            <button (click)="init()" class="btn btn-primary btn-sm"><i class="fas fa-power-off"></i> Reset</button>
+        </ng-container>
+        
+      </div>
+    </div>
+  </div>
+  
+
+  <div class="col-12 col-sm-12 col-md-8 col-lg-8 col-xl-8 mx-auto" *ngIf="fileUploaded">
+    <div class="alert alert-success">
+      <i class="fa fa-check"></i> File uploaded successflly
+    </div>
+  </div>
+
+</div>

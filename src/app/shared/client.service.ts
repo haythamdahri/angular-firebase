@@ -13,6 +13,10 @@ export class ClientService {
         return this.afs.collection('clients').snapshotChanges();
     }
 
+    getCustomClients(keyword: string) {
+        return this.afs.collection('clients', ref => ref.where('city', '==', keyword)).snapshotChanges();
+    }
+
     getClient(id: string) {
         return this.afs.doc(`clients/${id}`).snapshotChanges();
     }

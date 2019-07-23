@@ -1,0 +1,54 @@
+<div class="row">
+  <div class="col-12 col-sm-12 col-md-8 col-lg-8 col-xl-8 mx-auto">
+
+    <div class="card mt-4 text-center">
+      <div class="card-header">
+        <i class="fas fa-file-audio"></i> Audio recorder
+      </div>
+      <div class="card-body">
+        <h5 class="card-title"><i class="fas fa-microphone-alt"></i> Record audio</h5>
+        <div class="card-text">
+            <button class="btn btn-success" *ngIf="!isRecording && !blobUrl" (click)="startRecording()">
+                <i class="fas fa-microphone"></i> Start Recording
+              </button>
+              <button class="btn btn-primary" *ngIf="isRecording && !blobUrl" (click)="stopRecording()">
+                  <i class="fas fa-microphone-slash"></i> Stop Recording
+              </button>
+              <button class="btn btn-danger mt-2" *ngIf="!isRecording && blobUrl" (click)="clearRecordedData()">
+                  <i class="fas fa-power-off"></i> Record new audio
+              </button>
+
+              <br>
+
+              <!-- Upload recorder file -->
+              <button class="btn btn-secondary mt-2" *ngIf="!isRecording && blobUrl" (click)="onFileUpload()">
+                  <i class="fas fa-upload"></i> Upload recorded file
+              </button>
+
+              <br>
+
+              <div class="progress mt-2" *ngIf="uploadStarted">
+                  <div class="progress-bar progress-bar-striped" role="progressbar" [ngStyle]="{'width.%': uploadPercent | async}" attr.aria-valuenow="{{ uploadPercent | async }}" aria-valuemin="0" aria-valuemax="100"></div>
+                </div>
+          
+              <h4 class="text-center mt-2 font-weight-bold" *ngIf="isRecording && !blobUrl">
+                  Recording:
+                  <small class="text-muted">{{recordedTime}}</small>
+                </h4>
+              <div class="text-center mt-3">
+                <audio *ngIf="!isRecording && blobUrl" controls>
+                  <source [src]="blobUrl" type="audio/webm">
+                </audio>
+              </div>
+
+              <ng-container *ngIf="fileUploaded">
+                  <a href="{{ downloadURL | async }}" target="_blank">Download uploaded file</a>    
+                  <hr>
+              </ng-container>
+
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>

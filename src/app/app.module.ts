@@ -12,10 +12,12 @@ import { AngularFirestoreModule } from '@angular/fire/firestore';
 import { AngularFireStorageModule } from '@angular/fire/storage';
 import { AngularFireAuthModule } from '@angular/fire/auth';
 import { LoginComponent } from './login/login.component';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { AngularFireAuthGuardModule } from '@angular/fire/auth-guard';
 import { AngularFireDatabaseModule } from '@angular/fire/database';
 import { NgxPaginationModule } from 'ngx-pagination';
+import { FilesComponent } from './files/files.component';
+import { RecorderComponent } from './recorder/recorder.component';
 
 @NgModule({
   declarations: [
@@ -24,7 +26,9 @@ import { NgxPaginationModule } from 'ngx-pagination';
     FooterComponent,
     EditFormComponent,
     ListComponent,
-    LoginComponent
+    LoginComponent,
+    FilesComponent,
+    RecorderComponent
   ],
   imports: [
     BrowserModule,
@@ -36,6 +40,7 @@ import { NgxPaginationModule } from 'ngx-pagination';
     AngularFireAuthGuardModule,
     AngularFireDatabaseModule,
     FormsModule,
+    ReactiveFormsModule,
     NgxPaginationModule
   ],
   providers: [],
