@@ -28,6 +28,7 @@ export class HomeComponent implements OnInit, OnDestroy {
   constructor(private weatherService: WeatherService, private title: Title) {}
 
   ngOnInit() {
+    document.getElementsByClassName('site-footer')[0]['style']['position'] = 'relative';
     this.title.setTitle('Weather Provider');
     this.form = new FormGroup({
       search: new FormControl('', [Validators.required, Validators.minLength(3), Validators.maxLength(20)])
@@ -44,6 +45,7 @@ export class HomeComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy() {
+    document.getElementsByClassName('site-footer')[0]['style']['position'] = 'fixed';
     this.subscription.unsubscribe();
   }
 
