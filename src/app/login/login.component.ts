@@ -1,3 +1,4 @@
+import { Title } from "@angular/platform-browser";
 import { AuthService } from './../shared/auth.service';
 import { Component, OnInit, ElementRef, ViewChild } from '@angular/core';
 import { User } from '../models/user.model';
@@ -14,7 +15,8 @@ export class LoginComponent implements OnInit {
   @ViewChild('loginBtn') loginButton: ElementRef;
   loginError: boolean = false;
 
-  constructor(private authService: AuthService, private router: Router) {}
+  constructor(private authService: AuthService, private router: Router, 
+    private title: Title) {}
 
   ngOnInit() {
     this.user = new User();
@@ -23,6 +25,7 @@ export class LoginComponent implements OnInit {
   }
 
   onLogin() {
+    this.title.setTitle('Login');
     if (this.user.email !== '' && this.user.password !== '') {
       (<HTMLInputElement>this.loginButton.nativeElement).innerHTML =
         '<i class="fas fa-spinner fa-spin"></i> Login';

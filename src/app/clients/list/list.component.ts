@@ -1,3 +1,4 @@
+import { Title } from "@angular/platform-browser";
 import { Client } from './../../models/client.model';
 import { ClientService } from './../../shared/client.service';
 import { Component, OnInit, OnDestroy } from '@angular/core';
@@ -19,10 +20,12 @@ export class ListComponent implements OnInit, OnDestroy {
   constructor(
     private clientService: ClientService,
     private router: Router,
-    private route: ActivatedRoute
+    private route: ActivatedRoute, 
+    private title: Title
   ) {}
 
   ngOnInit() {
+    this.title.setTitle('Client Manager');
     this.subscription = this.clientService.getClients().subscribe(
       data => {
         this.clients = data.map(e => {

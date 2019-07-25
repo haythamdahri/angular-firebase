@@ -1,5 +1,6 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
+import { HttpClientModule } from '@angular/common/http';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { NavbarComponent } from './navbar/navbar.component';
@@ -18,6 +19,7 @@ import { AngularFireDatabaseModule } from '@angular/fire/database';
 import { NgxPaginationModule } from 'ngx-pagination';
 import { FilesComponent } from './files/files.component';
 import { RecorderComponent } from './recorder/recorder.component';
+import { HomeComponent } from './home/home.component';
 
 @NgModule({
   declarations: [
@@ -28,7 +30,8 @@ import { RecorderComponent } from './recorder/recorder.component';
     ListComponent,
     LoginComponent,
     FilesComponent,
-    RecorderComponent
+    RecorderComponent,
+    HomeComponent
   ],
   imports: [
     BrowserModule,
@@ -41,6 +44,7 @@ import { RecorderComponent } from './recorder/recorder.component';
     AngularFireDatabaseModule,
     FormsModule,
     ReactiveFormsModule,
+    HttpClientModule,
     NgxPaginationModule
   ],
   providers: [],

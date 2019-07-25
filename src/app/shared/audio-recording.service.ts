@@ -1,7 +1,8 @@
+import { DomSanitizer } from '@angular/platform-browser';
 import { Injectable } from '@angular/core';
 import * as moment from 'moment';
 import * as RecordRTC from 'recordrtc';
-import { Subject, Observable } from "rxjs";
+import { Subject, Observable } from 'rxjs';
 
 interface RecordedAudioOutput {
   blob: Blob;
@@ -20,7 +21,6 @@ export class AudioRecordingService {
   private _recordingTime = new Subject<string>();
   private _recordingFailed = new Subject<string>();
 
-
   getRecordedBlob(): Observable<RecordedAudioOutput> {
     return this._recorded.asObservable();
   }
@@ -33,22 +33,22 @@ export class AudioRecordingService {
     return this._recordingFailed.asObservable();
   }
 
-
   startRecording() {
-
     if (this.recorder) {
       // It means recording is already started or it is already recording something
       return;
     }
 
     this._recordingTime.next('00:00');
-    navigator.mediaDevices.getUserMedia({ audio: true }).then(s => {
-      this.stream = s;
-      this.record();
-    }).catch(error => {
-      this._recordingFailed.next();
-    });
-
+    navigator.mediaDevices
+      .getUserMedia({ audio: true })
+      .then(s => {
+        this.stream = s;
+        this.record();
+      })
+      .catch(error => {
+        this._recordingFailed.next();
+      });
   }
 
   abortRecording() {
@@ -56,7 +56,6 @@ export class AudioRecordingService {
   }
 
   private record() {
-
     this.recorder = new RecordRTC.StereoAudioRecorder(this.stream, {
       type: 'audio',
       mimeType: 'audio/webm'
@@ -64,15 +63,15 @@ export class AudioRecordingService {
 
     this.recorder.record();
     this.startTime = moment();
-    this.interval = setInterval(
-      () => {
-        const currentTime = moment();
-        const diffTime = moment.duration(currentTime.diff(this.startTime));
-        const time = this.toString(diffTime.minutes()) + ':' + this.toString(diffTime.seconds());
-        this._recordingTime.next(time);
-      },
-      1000
-    );
+    this.interval = setInterval(() => {
+      const currentTime = moment();
+      const diffTime = moment.duration(currentTime.diff(this.startTime));
+      const time =
+        this.toString(diffTime.minutes()) +
+        ':' +
+        this.toString(diffTime.seconds());
+      this._recordingTime.next(time);
+    }, 1000);
   }
 
   private toString(value) {
@@ -87,18 +86,22 @@ export class AudioRecordingService {
   }
 
   stopRecording() {
-
     if (this.recorder) {
-      this.recorder.stop((blob) => {
-        if (this.startTime) {
-          const mp3Name = encodeURIComponent('audio_' + new Date().getTime() + '.mp3');
+      this.recorder.stop(
+        blob => {
+          if (this.startTime) {
+            const mp3Name = encodeURIComponent(
+              'audio_' + new Date().getTime() + '.mp3'
+            );
+            this.stopMedia();
+            this._recorded.next({ blob: blob, title: mp3Name });
+          }
+        },
+        () => {
           this.stopMedia();
-          this._recorded.next({ blob: blob, title: mp3Name });
+          this._recordingFailed.next();
         }
-      }, () => {
-        this.stopMedia();
-        this._recordingFailed.next();
-      });
+      );
     }
   }
 

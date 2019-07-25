@@ -1,8 +1,7 @@
+import { HomeComponent } from "./home/home.component";
 import { RecorderComponent } from "./recorder/recorder.component";
 import { FilesComponent } from "./files/files.component";
 import {
-  AngularFireAuthGuard,
-  hasCustomClaim,
   redirectUnauthorizedTo,
   redirectLoggedInTo,
   canActivate
@@ -18,6 +17,10 @@ const redirectLoggedInToHome = redirectLoggedInTo(['clients']);
 
 const routes: Routes = [
   {
+    path: '',
+    component: HomeComponent
+  },
+  {
     path: 'clients',
     component: ListComponent,
     ...canActivate(redirectUnauthorizedToLogin),
@@ -28,13 +31,11 @@ const routes: Routes = [
   },
   {
     path: 'files',
-    component: FilesComponent,
-    ...canActivate(redirectUnauthorizedToLogin)
+    component: FilesComponent
   },
   {
     path: 'recorder',
-    component: RecorderComponent,
-    ...canActivate(redirectUnauthorizedToLogin)
+    component: RecorderComponent
   },
   {
     path: 'login',

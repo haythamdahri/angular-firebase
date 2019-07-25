@@ -1,3 +1,4 @@
+import { Title } from "@angular/platform-browser";
 import { ConstantsService } from './../shared/constants.service';
 import { Component, OnInit } from '@angular/core';
 import { AngularFireStorage } from '@angular/fire/storage';
@@ -18,10 +19,13 @@ export class FilesComponent implements OnInit {
 
   constructor(
     private storage: AngularFireStorage,
-    private constantsService: ConstantsService
+    private constantsService: ConstantsService, 
+    private title: Title
   ) {}
 
-  ngOnInit() {}
+  ngOnInit() {
+    this.title.setTitle('Files Manager');
+  }
 
   init() {
     this.uploadStarted = false;

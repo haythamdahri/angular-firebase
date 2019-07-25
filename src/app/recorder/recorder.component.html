@@ -17,19 +17,7 @@
               <button class="btn btn-danger mt-2" *ngIf="!isRecording && blobUrl" (click)="clearRecordedData()">
                   <i class="fas fa-power-off"></i> Record new audio
               </button>
-
               <br>
-
-              <!-- Upload recorder file -->
-              <button class="btn btn-secondary mt-2" *ngIf="!isRecording && blobUrl" (click)="onFileUpload()">
-                  <i class="fas fa-upload"></i> Upload recorded file
-              </button>
-
-              <br>
-
-              <div class="progress mt-2" *ngIf="uploadStarted">
-                  <div class="progress-bar progress-bar-striped" role="progressbar" [ngStyle]="{'width.%': uploadPercent | async}" attr.aria-valuenow="{{ uploadPercent | async }}" aria-valuemin="0" aria-valuemax="100"></div>
-                </div>
           
               <h4 class="text-center mt-2 font-weight-bold" *ngIf="isRecording && !blobUrl">
                   Recording:

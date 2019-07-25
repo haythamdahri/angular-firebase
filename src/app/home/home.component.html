@@ -1,0 +1,119 @@
+<div class="row bg-warning">
+
+  <div class="col-sm-12 col-md-8 col-lg-8 col-xl-8 mx-auto mt-2">
+    <form [formGroup]="form" (ngSubmit)="onCitySearch()">
+      <div class="form-row">
+        <div class="col-sm-10 col-md-10 col-lg-10 col-xl-10">
+          <input type="text" formControlName="search" class="form-control" [ngClass]="{'is-invalid': form.controls.search.touched && form.controls.search.invalid, 'is-valid': form.controls.search.valid}" placeholder="Search a city..."  />
+          <div class="invalid-feedback" *ngIf="form.controls.search.errors?.required">
+            Fill city name
+          </div>
+          <div class="invalid-feedback" *ngIf="form.controls.search.errors?.maxlength || form.controls.search.errors?.minlength">
+            Fill valid city name
+          </div>
+        </div>
+        <div class="col-sm-12 col-md-2 col-lg-2 col-xl-2">
+            <button class="navbar-btn btn btn-primary btn-block" #searchBtn [disabled]="form.invalid"><i class="fas fa-search-location"></i> Search</button>
+        </div>
+      </div>
+    </form>
+  </div>
+
+  <div class="col-12 col-sm-12 col-md-8 col-lg-8 col-xl-8 mx-auto mt-2" *ngIf="errorMode">
+    <div class="alert alert-danger">
+      <i class="fa fa-exclamation"></i> {{ form.controls.search.value }} does not match any city!
+    </div>
+  </div>
+
+  <div class="col-12 col-sm-12 col-md-8 col-lg-8 col-xl-8 mx-auto mt-4 mb-5">
+    <div class="weather-card one">
+      <div class="top">
+        <div class="wrapper">
+          <div class="mynav">
+            <a><span class="lnr lnr-chevron-left"></span></a>
+            <a><span class="lnr lnr-cog"></span></a>
+          </div>
+          <h1 class="heading">{{ cityWeather.description }}</h1>
+          <h3 class="location">{{ cityWeather.name }}, {{ cityWeather.country }}</h3>
+          <p class="temp">
+            <span class="temp-value">{{ cityWeather.temp }}</span>
+            <a><span class="temp-type"> C</span></a>
+          </p>
+        </div>
+      </div>
+      <div class="bottom">
+        <div class="wrapper">
+          <ul class="forecast">
+            <a href="javascript:;"><span class="lnr lnr-chevron-up go-up"></span></a>
+            <li class="active">
+              <span class="date">Today</span>
+              <span class="lnr lnr-sun condition">
+                <span class="temp">{{ cityWeather.date * 1000 | date : 'medium' }}</span>
+              </span>
+            </li>
+            <li class="active">
+              <span class="date">Sunrise</span>
+              <span class="lnr lnr-sun condition">
+                <span class="temp">{{ cityWeather.sunrise * 1000 | date : 'mediumTime' }}</span>
+              </span>
+            </li>
+            <li class="active">
+              <span class="date">Sunset</span>
+              <span class="lnr lnr-sun condition">
+                <span class="temp">{{ cityWeather.sunset * 1000 | date : 'mediumTime' }}</span>
+              </span>
+            </li>
+            <li class="active">
+              <span class="date">Max Temperature</span>
+              <span class="lnr lnr-sun condition">
+                <span class="temp">{{ cityWeather.tempMax }} <span class="temp-type">C</span></span>
+              </span>
+            </li>
+            <li class="active">
+              <span class="date">Min Temperature</span>
+              <span class="lnr lnr-sun condition">
+                <span class="temp">{{ cityWeather.tempMin }} <span class="temp-type">C</span></span>
+              </span>
+            </li>
+            <li class="active">
+              <span class="date">Pressure</span>
+              <span class="lnr lnr-sun condition">
+                <span class="temp">{{ cityWeather.pressure }}</span>
+              </span>
+            </li>
+            <li class="active">
+              <span class="date">Humidity</span>
+              <span class="lnr lnr-sun condition">
+                <span class="temp">{{ cityWeather.humidity }}%</span>
+              </span>
+            </li>
+            <li class="active">
+              <span class="date">Wind</span>
+              <span class="lnr lnr-sun condition">
+                <span class="temp">{{ cityWeather.windSpeed }}Km/h</span>
+              </span>
+            </li>
+            <li class="active">
+              <span class="date">Wind degree</span>
+              <span class="lnr lnr-sun condition">
+                <span class="temp">{{ cityWeather.windDegree }}°</span>
+              </span>
+            </li>
+            <li class="active">
+              <span class="date">Lat</span>
+              <span class="lnr lnr-sun condition">
+                <span class="temp">{{ cityWeather.lat }}</span>
+              </span>
+            </li>
+            <li class="active">
+              <span class="date">Lon</span>
+              <span class="lnr lnr-sun condition">
+                <span class="temp">{{ cityWeather.lon }}</span>
+              </span>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
