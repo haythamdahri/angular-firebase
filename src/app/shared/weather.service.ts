@@ -12,7 +12,7 @@ export class WeatherService {
   constructor(private http: HttpClient, private constantsService: ConstantsService) { }
 
   getCityWeather(cityName = 'Casablanca') {
-    return this.http.get(`http://api.openweathermap.org/data/2.5/weather?q=${cityName}&units=metric&APPID=${this.constantsService.WEATHER_API_KEY}`)
+    return this.http.get(`https://api.openweathermap.org/data/2.5/weather?q=${cityName}&units=metric&APPID=${this.constantsService.WEATHER_API_KEY}`)
     .pipe(map((data) => {
       const cityWeather: CityWeather = new CityWeather();
       cityWeather.name = data['name'];
